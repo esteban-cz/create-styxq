@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL(process.env.NEXT_PUBLIC_URL!),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
     authors: [{ name: "Štěpán Tomečka", url: "" }],
     title: "Create StyxQ",
     description: "Next.js 15 App Router + TailwindCSS + ShadcnUI + PWA Support",
