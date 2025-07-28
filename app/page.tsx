@@ -30,6 +30,13 @@ export default function Home() {
   //   };
   // }, [supabase]);
 
+  // useEffect(() => {
+  //   const subscribe = async () => {
+  //     await subscribeToPush();
+  //   };
+  //   subscribe().catch((err) => console.log(err));
+  // });
+
   return (
     <motion.div
       initial={{ opacity: 0 }}

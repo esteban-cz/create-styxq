@@ -1,36 +1,37 @@
-const CACHE_VERSION = 1;
-const CACHE = {
-  OFFLINE: "cache-v" + CACHE_VERSION,
-};
-const OFFLINE_URL = "offline.html";
-const OFFLINE_ICON = "icon.svg";
-
-self.addEventListener("install", function (event) {
-  event.waitUntil(
-    caches.open(CACHE.OFFLINE).then(function (cache) {
-      return cache.add(OFFLINE_URL);
-    }),
-    caches.open(CACHE.OFFLINE).then(function (cache) {
-      return cache.add(OFFLINE_ICON);
-    }),
-  );
+self.addEventListener("install", (event) => {
+  console.log("Service Worker installing.");
 });
 
-self.addEventListener("fetch", function (event) {
-  if (
-    event.request.mode === "navigate" ||
-    (event.request.method === "GET" &&
-      event.request.headers.get("accept").includes("text/html"))
-  ) {
-    event.respondWith(
-      (async function () {
-        try {
-          return await fetch(event.request, { redirect: "manual" });
-        } catch {
-          const cache = await caches.open(CACHE.OFFLINE);
-          return await cache.match(OFFLINE_URL);
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker activating.");
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(fetch(event.request));
+});
+
+self.addEventListener("push", (event) => {
+  const data = event.data?.json() || {};
+  const title = data.title || "New notification";
+  const options = {
+    body: data.body || "",
+    icon: data.icon || "/img/logo.png",
+    data: data.url || "/",
+  };
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();
+  const url = event.notification.data;
+  event.waitUntil(
+    clients
+      .matchAll({ type: "window", includeUncontrolled: true })
+      .then((clientsArr) => {
+        for (const client of clientsArr) {
+          if (client.url === url && "focus" in client) return client.focus();
         }
-      })(),
-    );
-  }
+        if (clients.openWindow) return clients.openWindow(url);
+      }),
+  );
 });
