@@ -1,5 +1,16 @@
 # Supabase CheatSheet
 
+## Create web-push table
+
+```
+create table web_push_subscriptions (
+  endpoint text primary key,
+  p256dh text not null,
+  auth text not null,
+  expiration_time timestamp with time zone
+);
+```
+
 ## Check Auth
 
 ```
