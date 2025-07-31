@@ -9,19 +9,16 @@ webpush.setVapidDetails(
   process.env.VAPID_PRIVATE_KEY!,
 );
 
-interface SendRequest {
-  title: string;
-  body: string;
-  url?: string;
-  icon?: string;
-}
-
-export async function POST(request: Request) {
+export async function GET() {
   try {
     await dbConnect();
 
-    const { title, body, url, icon } = (await request.json()) as SendRequest;
-    const payload = JSON.stringify({ title, body, url, icon });
+    const payload = JSON.stringify({
+      title: "Krásné výročí 💋",
+      body: "Dnes máme výročí!",
+      url: "/vyroci",
+      icon: "/img/icon.png",
+    });
 
     const subs = await WebPushSubscription.find({});
 

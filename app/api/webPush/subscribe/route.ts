@@ -1,20 +1,44 @@
-import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
+import { WebPushSubscription } from "@/models/webPushModels";
+
+interface PushSubscriptionJSON {
+  endpoint: string;
+  keys: {
+    p256dh: string;
+    auth: string;
+  };
+  expirationTime?: number | null;
+}
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
-  const sub = (await request.json()) as PushSubscriptionJSON;
-  const { endpoint, keys, expirationTime } = sub;
+  try {
+    await dbConnect();
+    const sub = (await request.json()) as PushSubscriptionJSON;
+    const { endpoint, keys, expirationTime } = sub;
 
-  await supabase.from("web_push_subscriptions").upsert(
-    {
-      endpoint,
-      p256dh: keys!.p256dh!,
-      auth: keys!.auth!,
-      expiration_time: expirationTime ? new Date(expirationTime) : null,
-    },
-    { onConflict: "endpoint" },
-  );
+    await WebPushSubscription.findOneAndUpdate(
+      { endpoint },
+      {
+        keys: {
+          p256dh: keys.p256dh,
+          auth: keys.auth,
+        },
+        expirationTime: expirationTime ? new Date(expirationTime) : null,
+      },
+      {
+        upsert: true,
+        new: true,
+        setDefaultsOnInsert: true,
+      },
+    );
 
-  return NextResponse.json({ success: true }, { status: 201 });
+    return NextResponse.json({ success: true }, { status: 201 });
+  } catch (error) {
+    console.error("Subscribe error:", error);
+    return NextResponse.json(
+      { error: "Unable to save subscription" },
+      { status: 500 },
+    );
+  }
 }

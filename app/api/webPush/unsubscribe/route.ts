@@ -1,14 +1,24 @@
-import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import dbConnect from "@/lib/db";
+import { WebPushSubscription } from "@/models/webPushModels";
+
+interface UnsubscribeRequest {
+  endpoint: string;
+}
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
-  const { endpoint } = (await request.json()) as { endpoint: string };
+  try {
+    await dbConnect();
+    const { endpoint } = (await request.json()) as UnsubscribeRequest;
 
-  await supabase
-    .from("web_push_subscriptions")
-    .delete()
-    .eq("endpoint", endpoint);
+    await WebPushSubscription.deleteOne({ endpoint });
 
-  return NextResponse.json({ success: true });
+    return NextResponse.json({ success: true }, { status: 200 });
+  } catch (error) {
+    console.error("Unsubscribe error:", error);
+    return NextResponse.json(
+      { error: "Unable to remove subscription" },
+      { status: 500 },
+    );
+  }
 }
