@@ -8,7 +8,7 @@ interface FetchDataReturn<T = any> {
     data?: any,
     method?: string,
     headers?: HeadersObj,
-  ) => Promise<T | undefined>;
+  ) => Promise<T>;
   loading: boolean;
   error: string | null;
   message: string | null;
@@ -25,7 +25,7 @@ export default function useHttp(): FetchDataReturn {
       data?: any,
       method = "POST",
       headers: HeadersObj = { "Content-Type": "application/json" },
-    ) => {
+    ): Promise<any> => {
       setLoading(true);
       setError(null);
       setMessage(null);
@@ -42,14 +42,17 @@ export default function useHttp(): FetchDataReturn {
         if (!res.ok) {
           const errMsg =
             (payload && (payload.error || payload.message)) || res.statusText;
-          throw new Error(errMsg);
+          const error = new Error(errMsg) as Error & { status?: number };
+          error.status = res.status;
+          throw error;
         }
 
         setMessage(payload.message || "Success");
-        return payload as any;
+        return payload;
       } catch (err: any) {
-        console.error("fetchData error:", err);
-        setError(err.message || "Something went wrong.");
+        const msg = err.message || "Something went wrong.";
+        setError(msg);
+        throw err;
       } finally {
         setLoading(false);
       }
