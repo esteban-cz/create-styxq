@@ -1,7 +1,7 @@
 "use client";
 
 import { InfiniteSlider } from "@/components/ui/infinite-slider";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useMobile";
 
 interface ResponsiveSliderProps {
   gap: number;

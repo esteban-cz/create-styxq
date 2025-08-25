@@ -1,7 +1,7 @@
 "use client";
 
 import { Tilt } from "@/components/ui/tilt";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useMobile";
 
 interface ResponsiveTiltProps {
   rotationFactor: number;
