@@ -1,11 +1,8 @@
-"use client";
+"use client"
 
-import Link from "next/link";
-import { motion } from "motion/react";
-import ThemeButton from "@/components/ui/theme-button";
-import { info } from "@/app/resources";
-import { TextRoll } from "@/components/ui/text-roll";
-import { Clock } from "@/components/ui/clock";
+import Link from "next/link"
+import { motion } from "motion/react"
+import ThemeButton from "@/components/ui/theme/theme-button-animated"
 
 export default function Navbar() {
   return (
@@ -19,7 +16,7 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
           >
             <Link href="/" className="text-xl font-bold">
-              <TextRoll>{info.name}</TextRoll>
+              Next.js Starter
             </Link>
           </motion.div>
           <motion.div
@@ -30,10 +27,9 @@ export default function Navbar() {
             className="flex items-center gap-2"
           >
             <ThemeButton />
-            <Clock />
           </motion.div>
         </div>
       </div>
     </nav>
-  );
+  )
 }

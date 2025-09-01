@@ -1,36 +1,38 @@
-import "@/app/globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { baseURL, info } from "@/app/resources";
-import { ReactLenis } from "lenis/react";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
+import "@/app/globals.css"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import { ReactLenis } from "lenis/react"
+import Navbar from "@/components/layout/Navbar"
+import Footer from "@/components/layout/Footer"
+import ToasterWithTheme from "@/components/ui/theme-toaster"
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ["latin"] })
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    metadataBase: new URL(baseURL),
-    authors: info.author,
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL!),
+    authors: [{ name: "Štěpán Tomečka", url: "https://www.estyxq.dev" }],
     title: {
-      template: `%s | ${info.name}`,
-      default: info.name,
+      template: `%s | Next.js Starter`,
+      default: `Next.js Starter`,
     },
-    description: info.description,
-    keywords: info.keywords,
-    icons: [{ rel: "icon", url: info.icon }],
-  };
+    description: "Next.js + shadcn-ui",
+    keywords: "next.js, starter",
+  }
 }
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <head>
+        <meta name="apple-mobile-web-app-title" content="Next.js Starter" />
+      </head>
+      <body className={font.className}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
@@ -40,10 +42,11 @@ export default async function RootLayout({
           <ReactLenis root>
             <Navbar />
             <main className="min-h-screen">{children}</main>
+            <ToasterWithTheme />
             <Footer />
           </ReactLenis>
         </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -1,18 +1,18 @@
-"use client";
-import { cn } from "@/lib/utils";
-import { motion, type Transition } from "motion/react";
+"use client"
+import { cn } from "@/lib/utils"
+import { motion, type Transition } from "motion/react"
 
 export type GlowEffectProps = {
-  className?: string;
-  style?: React.CSSProperties;
-  colors?: string[];
+  className?: string
+  style?: React.CSSProperties
+  colors?: string[]
   mode?:
     | "rotate"
     | "pulse"
     | "breathe"
     | "colorShift"
     | "flowHorizontal"
-    | "static";
+    | "static"
   blur?:
     | number
     | "softest"
@@ -21,11 +21,11 @@ export type GlowEffectProps = {
     | "strong"
     | "stronger"
     | "strongest"
-    | "none";
-  transition?: Transition;
-  scale?: number;
-  duration?: number;
-};
+    | "none"
+  transition?: Transition
+  scale?: number
+  duration?: number
+}
 
 export function GlowEffect({
   className,
@@ -37,11 +37,15 @@ export function GlowEffect({
   scale = 1,
   duration = 5,
 }: GlowEffectProps) {
-  const BASE_TRANSITION = {
+  const BASE_TRANSITION: Transition = {
     repeat: Infinity,
     duration: duration,
     ease: "linear",
-  };
+  }
+  const MIRROR_TRANSITION: Transition = {
+    ...BASE_TRANSITION,
+    repeatType: "mirror",
+  }
 
   const animations = {
     rotate: {
@@ -49,9 +53,7 @@ export function GlowEffect({
         `conic-gradient(from 0deg at 50% 50%, ${colors.join(", ")})`,
         `conic-gradient(from 360deg at 50% 50%, ${colors.join(", ")})`,
       ],
-      transition: {
-        ...(transition ?? BASE_TRANSITION),
-      },
+      transition: transition ?? BASE_TRANSITION,
     },
     pulse: {
       background: colors.map(
@@ -60,12 +62,7 @@ export function GlowEffect({
       ),
       scale: [1 * scale, 1.1 * scale, 1 * scale],
       opacity: [0.5, 0.8, 0.5],
-      transition: {
-        ...(transition ?? {
-          ...BASE_TRANSITION,
-          repeatType: "mirror",
-        }),
-      },
+      transition: transition ?? MIRROR_TRANSITION,
     },
     breathe: {
       background: [
@@ -75,45 +72,30 @@ export function GlowEffect({
         ),
       ],
       scale: [1 * scale, 1.05 * scale, 1 * scale],
-      transition: {
-        ...(transition ?? {
-          ...BASE_TRANSITION,
-          repeatType: "mirror",
-        }),
-      },
+      transition: transition ?? MIRROR_TRANSITION,
     },
     colorShift: {
       background: colors.map((color, index) => {
-        const nextColor = colors[(index + 1) % colors.length];
-        return `conic-gradient(from 0deg at 50% 50%, ${color} 0%, ${nextColor} 50%, ${color} 100%)`;
+        const nextColor = colors[(index + 1) % colors.length]
+        return `conic-gradient(from 0deg at 50% 50%, ${color} 0%, ${nextColor} 50%, ${color} 100%)`
       }),
-      transition: {
-        ...(transition ?? {
-          ...BASE_TRANSITION,
-          repeatType: "mirror",
-        }),
-      },
+      transition: transition ?? MIRROR_TRANSITION,
     },
     flowHorizontal: {
       background: colors.map((color) => {
-        const nextColor = colors[(colors.indexOf(color) + 1) % colors.length];
-        return `linear-gradient(to right, ${color}, ${nextColor})`;
+        const nextColor = colors[(colors.indexOf(color) + 1) % colors.length]
+        return `linear-gradient(to right, ${color}, ${nextColor})`
       }),
-      transition: {
-        ...(transition ?? {
-          ...BASE_TRANSITION,
-          repeatType: "mirror",
-        }),
-      },
+      transition: transition ?? MIRROR_TRANSITION,
     },
     static: {
       background: `linear-gradient(to right, ${colors.join(", ")})`,
     },
-  };
+  }
 
   const getBlurClass = (blur: GlowEffectProps["blur"]) => {
     if (typeof blur === "number") {
-      return `blur-[${blur}px]`;
+      return `blur-[${blur}px]`
     }
 
     const presets = {
@@ -124,10 +106,10 @@ export function GlowEffect({
       stronger: "blur-xl",
       strongest: "blur-xl",
       none: "blur-none",
-    };
+    }
 
-    return presets[blur as keyof typeof presets];
-  };
+    return presets[blur as keyof typeof presets]
+  }
 
   return (
     <motion.div
@@ -147,5 +129,5 @@ export function GlowEffect({
         className,
       )}
     />
-  );
+  )
 }

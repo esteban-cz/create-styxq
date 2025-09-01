@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { motion, AnimatePresence } from "motion/react";
-import { Loader2 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react"
+import { Loader2 } from "lucide-react"
 
 export default function LoadingScreen() {
   return (
@@ -19,5 +19,5 @@ export default function LoadingScreen() {
         </div>
       </motion.div>
     </AnimatePresence>
-  );
+  )
 }

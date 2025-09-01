@@ -1,19 +1,19 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
+import { useRouter } from "next/navigation"
 
 export default function BackButton() {
-  const router = useRouter();
+  const router = useRouter()
 
   const handleBack = () => {
     if (window.history.length <= 1) {
-      router.push("/");
+      router.push("/")
     } else {
-      router.back();
+      router.back()
     }
-  };
+  }
 
   return (
     <Button
@@ -25,5 +25,5 @@ export default function BackButton() {
       <ArrowLeft className="mr-2 inline-block h-4 w-4 align-middle" />
       <span className="inline-block align-middle">Go back</span>
     </Button>
-  );
+  )
 }

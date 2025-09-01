@@ -1,22 +1,23 @@
-"use client";
+"use client"
 
-import { ArrowUp } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { info } from "@/app/resources";
-import { InView } from "@/components/ui/in-view";
+import { ArrowUp } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { motion } from "motion/react"
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
   return (
     <footer className="overflow-hidden border-t">
-      <InView
+      <motion.div
         variants={{
           hidden: { opacity: 0, y: 10 },
           visible: { opacity: 0.8, y: 0 },
         }}
-        viewOptions={{ once: false }}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}
         transition={{ duration: 1, ease: "easeInOut" }}
       >
         <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
@@ -30,12 +31,12 @@ export default function Footer() {
               <ArrowUp />
             </Button>
             <div className="text-muted-foreground mt-6 text-sm">
-              © {new Date().getFullYear()} {info.name}.{" "}
+              © {new Date().getFullYear()} Next.js Starter.{" "}
               <div className="sm:inline">All rights reserved.</div>
             </div>
           </div>
         </div>
-      </InView>
+      </motion.div>
     </footer>
-  );
+  )
 }

@@ -1,31 +1,30 @@
-import Image from "next/image";
-import { info } from "@/app/resources";
-import { Button } from "@/components/ui/button";
-import { TextShimmerWave } from "@/components/ui/text-shimmer-wave";
-import { InView } from "@/components/ui/in-view";
-import { TextLoop } from "@/components/ui/text-loop";
-import { GlowEffect } from "@/components/ui/glow-effect";
-import ResponsiveSlider from "@/components/ui/responsive-slider";
-import ResponsiveTilt from "@/components/ui/responsive-tilt";
+"use client"
 
-export default async function Home() {
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { TextLoop } from "@/components/ui/text-loop"
+import ResponsiveSlider from "@/components/ui/responsive-slider"
+import ResponsiveTilt from "@/components/ui/responsive-tilt"
+import { motion } from "motion/react"
+import { GlowEffect } from "@/components/ui/glow-effect"
+import LinkAnimated from "@/components/ui/link-animated"
+
+export default function Home() {
   return (
     <div className="py-16">
       <section className="from-primary/10 via-background to-background relative overflow-hidden bg-gradient-to-b">
-        <InView
+        <motion.div
           variants={{
             hidden: { opacity: 0, y: 50 },
             visible: { opacity: 0.8, y: 0 },
           }}
-          viewOptions={{ once: true }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
-            <h1 className="mb-8 text-4xl font-bold sm:text-6xl">
-              <TextShimmerWave className="mt-2 sm:mt-0 sm:inline">
-                {info.name}
-              </TextShimmerWave>
-            </h1>
+            <LinkAnimated className="mb-8 text-4xl font-bold sm:text-6xl">
+              Next.js Starter
+            </LinkAnimated>
+            <br />
             <TextLoop
               className="overflow-y-clip"
               transition={{
@@ -111,6 +110,7 @@ export default async function Home() {
             <div className="flex justify-center">
               <ResponsiveSlider
                 speedOnHover={20}
+                speed={40}
                 gap={20}
                 className="mt-8 max-w-lg"
               >
@@ -124,16 +124,15 @@ export default async function Home() {
               </ResponsiveSlider>
             </div>
           </div>
-        </InView>
+        </motion.div>
       </section>
 
       <section className="bg-background flex justify-center text-center">
-        <InView
+        <motion.div
           variants={{
             hidden: { opacity: 0, y: 50 },
             visible: { opacity: 0.8, y: 0 },
           }}
-          viewOptions={{ once: true }}
           transition={{ duration: 1, ease: "easeInOut" }}
         >
           <div className="mx-auto max-w-7xl px-4 py-10 text-center sm:px-6 sm:py-24 lg:px-8">
@@ -146,20 +145,20 @@ export default async function Home() {
                 />
                 <div className="relative h-full w-full rounded-lg">
                   <Image
-                    src={info.image}
+                    src="/img/banner.png"
                     width={600}
                     height={300}
-                    title={info.name}
-                    alt={info.name}
+                    title="Next.js Starter"
+                    alt="Next.js Starter"
                     priority={true}
-                    className="rounded-lg"
+                    className="h-auto w-auto rounded-lg"
                   />
                 </div>
               </div>
             </ResponsiveTilt>
           </div>
-        </InView>
+        </motion.div>
       </section>
     </div>
-  );
+  )
 }

@@ -1,21 +1,15 @@
-import { baseURL, routes } from "@/app/resources";
+import type { MetadataRoute } from "next"
 
-export default async function sitemap() {
-  const sitemapRoutes = Object.entries(routes)
-    .filter(([_, config]) => {
-      if (
-        config.protected &&
-        typeof config.protected === "object" &&
-        config.protected.role === "admin"
-      ) {
-        return false;
-      }
-      return true;
-    })
-    .map(([path, _]) => ({
-      url: `${baseURL}${path}`,
-      lastModified: new Date().toISOString(),
-    }));
+const BASE = process.env.NEXT_PUBLIC_BASE_URL
+const lastModified = new Date("2025-08-01T23:10:27Z")
 
-  return sitemapRoutes;
+export default function sitemap(): MetadataRoute.Sitemap {
+  return [
+    {
+      url: `${BASE}/`,
+      lastModified,
+      changeFrequency: "monthly",
+      priority: 1.0,
+    },
+  ]
 }

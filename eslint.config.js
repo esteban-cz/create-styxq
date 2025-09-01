@@ -1,13 +1,17 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import tseslint from "typescript-eslint";
+import { FlatCompat } from "@eslint/eslintrc"
+import { defineConfig } from "eslint/config"
+import tseslint from "typescript-eslint"
+
+import noRelative from "eslint-plugin-no-relative-import-paths"
+import unusedImports from "eslint-plugin-unused-imports"
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
-});
+})
 
-export default tseslint.config(
+export default defineConfig([
   {
-    ignores: [".next"],
+    ignores: [".next", "next-env.d.ts"],
   },
   ...compat.extends("next/core-web-vitals"),
   {
@@ -17,14 +21,16 @@ export default tseslint.config(
       ...tseslint.configs.recommendedTypeChecked,
       ...tseslint.configs.stylisticTypeChecked,
     ],
+    plugins: {
+      "no-relative-import-paths": noRelative,
+      "unused-imports": unusedImports,
+    },
+
     rules: {
       "@typescript-eslint/array-type": "off",
       "@typescript-eslint/consistent-type-definitions": "off",
       "@typescript-eslint/consistent-type-imports": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
+      "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/require-await": "off",
       "@typescript-eslint/no-misused-promises": [
         "error",
@@ -43,17 +49,26 @@ export default tseslint.config(
       "@typescript-eslint/no-unsafe-return": "off",
       "@typescript-eslint/no-explicit-any": "off",
       "react/no-unescaped-entities": "off",
+      "react-hooks/exhaustive-deps": "off",
       "no-var": "off",
       "prefer-const": "off",
-      "no-restricted-imports": [
+      "no-relative-import-paths/no-relative-import-paths": [
         "warn",
         {
-          patterns: [
-            {
-              group: ["../*"],
-              message: "Usage of relative parent imports is not allowed.",
-            },
-          ],
+          allowSameFolder: true,
+          rootDir: ".",
+          prefix: "@",
+        },
+      ],
+      "no-unused-vars": "off",
+      "unused-imports/no-unused-imports": "warn",
+      "unused-imports/no-unused-vars": [
+        "warn",
+        {
+          vars: "all",
+          varsIgnorePattern: "^_",
+          args: "after-used",
+          argsIgnorePattern: "^_",
         },
       ],
     },
@@ -68,4 +83,4 @@ export default tseslint.config(
       },
     },
   },
-);
+])
