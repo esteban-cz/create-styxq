@@ -1,13 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Rocket } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ThemeButton from "@/components/ui/theme/theme-button-animated";
 import InstallPrompt from "@/components/PWA/install-prompt";
+import { useAuth } from "@/components/providers/auth-provider";
+import useHttp from "@/hooks/useHttp";
 
 const menuVariants = {
   hidden: { height: 0, transition: { when: "afterChildren" } },
@@ -33,33 +35,16 @@ const iconVariants = {
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const router = useRouter();
-  const [isPromptVisible, setIsPromptVisible] = useState(true);
-  const pathname = usePathname();
-  const isHomeScreen = pathname === "/";
+  const { user } = useAuth();
+  const { req } = useHttp();
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsPromptVisible(window.scrollY < 50);
-      setIsPromptVisible(isHomeScreen && window.scrollY < 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHomeScreen]);
-
-  const handleSignOut = async () => {
+  async function handleSignOut() {
+    const res = await req("/api/auth/signOut", "", "GET", {
+      successToast: true,
+    });
+    if (!res.ok) return;
     router.refresh();
-    router.push("/");
-  };
-
-  if (!mounted) {
-    return null;
   }
 
   const menuItems = [{ title: "About", href: "/about" }];
@@ -85,16 +70,29 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link href="/sign-in">
-              <Button variant="default" className="w-25">
-                Sign In
+            {user ? (
+              <Button
+                variant="default"
+                className="w-25"
+                onClick={handleSignOut}
+              >
+                Sign Out
               </Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button variant="outline" className="w-25">
-                Sign Up
-              </Button>
-            </Link>
+            ) : (
+              <>
+                <Link href="/sign-in">
+                  <Button variant="default" className="w-25">
+                    Sign In
+                  </Button>
+                </Link>
+
+                <Link href="/sign-up">
+                  <Button variant="outline" className="w-25">
+                    Sign Up
+                  </Button>
+                </Link>
+              </>
+            )}
 
             <ThemeButton />
           </div>

@@ -26,5 +26,8 @@ export async function POST(req: NextRequest) {
 
   await signUser(user);
 
-  return NextResponse.json({ success: true }, { status: 200 });
+  return NextResponse.json(
+    { success: true, message: "Welcome back" },
+    { status: 200 },
+  );
 }

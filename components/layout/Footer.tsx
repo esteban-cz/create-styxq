@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { useIsMobile } from "@/hooks/useMobile";
 import Link from "next/link";
 import DynamicIcon from "@/components/ui/dynamic-icon";
 import LinkAnimated from "@/components/ui/link-animated";

@@ -6,5 +6,8 @@ export async function GET() {
 
   cookieStore.set({ name: "auth_token", value: "", path: "/", maxAge: 0 });
 
-  return NextResponse.json({ success: true }, { status: 200 });
+  return NextResponse.json(
+    { success: true, message: "Signed out successfully" },
+    { status: 200 },
+  );
 }

@@ -1,11 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
 
 export interface IUser extends Document {
-  _id: mongoose.Types.ObjectId;
   name: string;
+  surname: string;
   email: string;
   password?: string;
-  role?: "admin" | "client";
   createdAt: Date;
   updatedAt: Date;
 }
@@ -13,9 +12,9 @@ export interface IUser extends Document {
 const UserSchema: Schema = new Schema(
   {
     name: { type: String, required: true },
+    surname: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String },
-    role: { type: String, enum: ["admin", "client"], default: "client" },
   },
   { timestamps: true },
 );

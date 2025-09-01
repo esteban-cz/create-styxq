@@ -1,9 +1,14 @@
 import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 
-const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);
-
 export async function signUser(user: any) {
+  const rawSecret = process.env.JWT_SECRET ?? "";
+  if (!rawSecret) {
+    throw new Error(
+      "JWT_SECRET is missing or empty. Set it in your environment.",
+    );
+  }
+  const JWT_SECRET = new TextEncoder().encode(rawSecret);
   const { name, surname, email, role } = user;
 
   const userId = user._id.toString();

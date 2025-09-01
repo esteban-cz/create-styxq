@@ -5,7 +5,7 @@ import { User } from "@/models/User";
 import { signUser } from "@/lib/auth/signUser";
 
 export async function POST(req: NextRequest) {
-  const { name, surname, email, role, password } = await req.json();
+  const { name, surname, email, password } = await req.json();
   if (!name || !email || !password) {
     return NextResponse.json(
       { error: "Name, email, and password are required" },
@@ -26,11 +26,13 @@ export async function POST(req: NextRequest) {
     name,
     surname,
     email,
-    role,
     password: hash,
   });
 
   await signUser(user);
 
-  return NextResponse.json({ success: true }, { status: 200 });
+  return NextResponse.json(
+    { success: true, message: "User created successfully" },
+    { status: 200 },
+  );
 }
