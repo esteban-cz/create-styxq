@@ -1,18 +1,18 @@
-import "@/app/globals.css";
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import { ThemeProvider } from "@/components/providers/theme-provider";
-import { ReactLenis } from "lenis/react";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import ToasterWithTheme from "@/components/ui/theme-toaster";
-import RegisterSW from "@/components/PWA/register-sw";
-import CookieConsent from "@/components/ui/cookies-consent";
-import { cookies } from "next/headers";
-import { verifyToken } from "@/lib/auth/verifyToken";
-import { AuthProvider } from "@/components/providers/auth-provider";
+import "@/app/globals.css"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import { ThemeProvider } from "@/components/providers/theme-provider"
+import { ReactLenis } from "lenis/react"
+import Navbar from "@/components/layout/Navbar"
+import Footer from "@/components/layout/Footer"
+import ToasterWithTheme from "@/components/ui/theme-toaster"
+import RegisterSW from "@/components/PWA/register-sw"
+import CookieConsent from "@/components/ui/cookies-consent"
+import { cookies } from "next/headers"
+import { verifyToken } from "@/lib/auth/verifyToken"
+import { AuthProvider } from "@/components/providers/auth-provider"
 
-const font = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ["latin"] })
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
@@ -24,23 +24,23 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: "Next.js 15 App Router + TailwindCSS + ShadcnUI + PWA Support",
     keywords: ["next", "nextjs", "tailwind", "shadcn", "pwa"],
-  };
+  }
 }
 
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("auth_token")?.value;
+  const cookieStore = await cookies()
+  const token = cookieStore.get("auth_token")?.value
 
-  let decodedToken = null;
+  let decodedToken = null
   if (token) {
     try {
-      decodedToken = await verifyToken(token);
+      decodedToken = await verifyToken(token)
     } catch (error) {
-      console.log("Error decoding token:", error);
+      console.log("Error decoding token:", error)
     }
   }
 
@@ -66,5 +66,5 @@ export default async function RootLayout({
         </AuthProvider>
       </body>
     </html>
-  );
+  )
 }

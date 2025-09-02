@@ -1,10 +1,10 @@
-"use client";
+"use client"
 
-import { motion } from "motion/react";
-import { Rocket } from "lucide-react";
+import { motion } from "motion/react"
+import { Rocket } from "lucide-react"
 
 interface LoadingScreenProps {
-  text?: string;
+  text?: string
 }
 
 export default function LoadingScreen({
@@ -51,5 +51,5 @@ export default function LoadingScreen({
         </motion.div>
       </motion.div>
     </motion.div>
-  );
+  )
 }

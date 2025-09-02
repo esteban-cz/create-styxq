@@ -1,6 +1,6 @@
-import { cn } from "@/lib/utils";
-import { Shield } from "lucide-react";
-import { motion } from "motion/react";
+import { cn } from "@/lib/utils"
+import { Shield } from "lucide-react"
+import { motion } from "motion/react"
 
 function Skeleton({
   className,
@@ -29,7 +29,7 @@ function Skeleton({
         <Shield className="text-primary h-8 w-8" />
       </motion.div>
     </div>
-  );
+  )
 }
 
-export { Skeleton };
+export { Skeleton }

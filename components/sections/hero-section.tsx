@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { motion } from "motion/react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Rocket } from "lucide-react";
-import Link from "next/link";
+import { motion } from "motion/react"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Rocket } from "lucide-react"
+import Link from "next/link"
 
 export function HeroSection() {
   return (
@@ -84,5 +84,5 @@ export function HeroSection() {
         </motion.div>
       </div>
     </div>
-  );
+  )
 }

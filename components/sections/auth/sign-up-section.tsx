@@ -1,34 +1,34 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Input } from "@/components/ui/input"
 import {
   Form,
   FormField,
   FormItem,
   FormControl,
   FormLabel,
-} from "@/components/ui/form";
-import { Card } from "@/components/ui/card";
-import { signUpSchema, type SignUpData } from "@/validation/signUpSchema";
-import useHttp from "@/hooks/useHttp";
-import { motion } from "motion/react";
-import { PasswordInput } from "@/components/ui/password-input";
-import { LoadingButton } from "@/components/ui/button-loading";
-import { Lock, Mail, User } from "lucide-react";
-import LinkAnimated from "@/components/ui/link-animated";
+} from "@/components/ui/form"
+import { Card } from "@/components/ui/card"
+import { signUpSchema, type SignUpData } from "@/validation/signUpSchema"
+import useHttp from "@/hooks/useHttp"
+import { motion } from "motion/react"
+import { PasswordInput } from "@/components/ui/password-input"
+import { LoadingButton } from "@/components/ui/button-loading"
+import { Lock, Mail, User } from "lucide-react"
+import LinkAnimated from "@/components/ui/link-animated"
 
 export default function SignUpSection() {
-  const { req, loading } = useHttp();
-  const router = useRouter();
+  const { req, loading } = useHttp()
+  const router = useRouter()
 
   const form = useForm<SignUpData>({
     resolver: zodResolver(signUpSchema),
     defaultValues: { name: "", surname: "", email: "", password: "" },
     mode: "onChange",
-  });
+  })
 
   async function onSubmit(data: SignUpData) {
     // try {
@@ -56,16 +56,16 @@ export default function SignUpSection() {
     // }
     const res = await req("/api/auth/signUp", data, "POST", {
       successToast: true,
-    });
-    if (!res.ok) return;
-    router.push("/sign-in");
-    router.refresh();
+    })
+    if (!res.ok) return
+    router.push("/sign-in")
+    router.refresh()
   }
 
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+  }
 
   return (
     <section className="bg-background/10 py-30">
@@ -185,5 +185,5 @@ export default function SignUpSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

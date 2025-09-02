@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   async headers() {
@@ -24,11 +24,11 @@ const nextConfig: NextConfig = {
           },
         ],
       },
-    ];
+    ]
   },
   experimental: {
     browserDebugInfoInTerminal: true,
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

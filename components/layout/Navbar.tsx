@@ -1,15 +1,16 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Menu, X, Rocket } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import ThemeButton from "@/components/ui/theme/theme-button-animated";
-import InstallPrompt from "@/components/PWA/install-prompt";
-import { useAuth } from "@/components/providers/auth-provider";
-import useHttp from "@/hooks/useHttp";
+import { useState } from "react"
+import Link from "next/link"
+import { usePathname, useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Menu, X, Rocket } from "lucide-react"
+import { motion, AnimatePresence } from "motion/react"
+import ThemeButton from "@/components/ui/theme/theme-button-animated"
+import InstallPrompt from "@/components/PWA/install-prompt"
+import { useAuth } from "@/components/providers/auth-provider"
+import useHttp from "@/hooks/useHttp"
+import LinkAnimated from "@/components/ui/link-animated"
 
 const menuVariants = {
   hidden: { height: 0, transition: { when: "afterChildren" } },
@@ -22,32 +23,33 @@ const menuVariants = {
       staggerChildren: 0.1,
     },
   },
-};
+}
 const itemVariants = {
   hidden: { opacity: 0, y: 10 },
   visible: { opacity: 1, y: 0 },
-};
+}
 const iconVariants = {
   initial: { rotate: -90, opacity: 0 },
   animate: { rotate: 0, opacity: 1 },
   exit: { rotate: 90, opacity: 0 },
-};
+}
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const router = useRouter();
-  const { user } = useAuth();
-  const { req } = useHttp();
+  const [isOpen, setIsOpen] = useState(false)
+  const router = useRouter()
+  const pathname = usePathname()
+  const { user } = useAuth()
+  const { req } = useHttp()
 
   async function handleSignOut() {
     const res = await req("/api/auth/signOut", "", "GET", {
       successToast: true,
-    });
-    if (!res.ok) return;
-    router.refresh();
+    })
+    if (!res.ok) return
+    router.refresh()
   }
 
-  const menuItems = [{ title: "About", href: "/about" }];
+  const menuItems = [{ title: "About", href: "/about" }]
 
   return (
     <nav className="bg-background/80 fixed z-50 w-full border-b backdrop-blur-md">
@@ -61,13 +63,17 @@ export default function Navbar() {
           {/* Desktop Menu */}
           <div className="hidden items-center space-x-8 md:flex">
             {menuItems.map((item) => (
-              <Link
+              <LinkAnimated
                 key={item.title}
                 href={item.href}
-                className="text-muted-foreground hover:text-primary transition-colors"
+                className={`${
+                  pathname === item.href
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                } transition-colors`}
               >
                 {item.title}
-              </Link>
+              </LinkAnimated>
             ))}
 
             {user ? (
@@ -138,7 +144,11 @@ export default function Navbar() {
                 <Link
                   href="/"
                   onClick={() => setIsOpen(false)}
-                  className="text-muted-foreground hover:text-primary block px-3 py-2 text-base font-medium transition-colors"
+                  className={`${
+                    pathname === "/"
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-primary"
+                  } block px-3 py-2 text-base font-medium transition-colors`}
                 >
                   Homepage
                 </Link>
@@ -148,7 +158,11 @@ export default function Navbar() {
                   <Link
                     href={item.href}
                     onClick={() => setIsOpen(false)}
-                    className="text-muted-foreground hover:text-primary block px-3 py-2 text-base font-medium transition-colors"
+                    className={`${
+                      pathname === item.href
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary"
+                    } block px-3 py-2 text-base font-medium transition-colors`}
                   >
                     {item.title}
                   </Link>
@@ -184,5 +198,5 @@ export default function Navbar() {
         )}
       </AnimatePresence>
     </nav>
-  );
+  )
 }

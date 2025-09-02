@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { Button } from "@/components/ui/button";
-import { Home } from "lucide-react";
-import Link from "next/link";
-import { motion } from "motion/react";
+import { Button } from "@/components/ui/button"
+import { Home } from "lucide-react"
+import Link from "next/link"
+import { motion } from "motion/react"
 
 export default function NotFoundScreen() {
   return (
@@ -43,5 +43,5 @@ export default function NotFoundScreen() {
         </Link>
       </motion.div>
     </motion.div>
-  );
+  )
 }

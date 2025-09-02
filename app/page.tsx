@@ -1,7 +1,7 @@
-"use client";
+"use client"
 
-import { HeroSection } from "@/components/sections/hero-section";
-import { motion } from "motion/react";
+import { HeroSection } from "@/components/sections/hero-section"
+import { motion } from "motion/react"
 
 export default function Home() {
   return (
@@ -13,5 +13,5 @@ export default function Home() {
     >
       <HeroSection />
     </motion.div>
-  );
+  )
 }

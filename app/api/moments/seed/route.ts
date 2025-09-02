@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server";
-import dbConnect from "@/lib/db";
-import { Moment } from "@/models/momentsModel";
+import { NextResponse } from "next/server"
+import dbConnect from "@/lib/db"
+import { Moment } from "@/models/momentsModel"
 
 export async function POST() {
   try {
-    await dbConnect();
+    await dbConnect()
 
-    await Moment.deleteMany({});
+    await Moment.deleteMany({})
 
     const momentsData = [
       {
@@ -86,19 +86,19 @@ export async function POST() {
         desc: "Vídeň, Brno - 26.6.2025",
         images: ["viden1", "viden2", "viden3", "viden4", "viden5"],
       },
-    ];
+    ]
 
-    const created = await Moment.insertMany(momentsData);
+    const created = await Moment.insertMany(momentsData)
 
     return NextResponse.json(
       { success: true, inserted: created.length },
       { status: 201 },
-    );
+    )
   } catch (error) {
-    console.error("Seeding moments error:", error);
+    console.error("Seeding moments error:", error)
     return NextResponse.json(
       { error: "Failed to seed moments" },
       { status: 500 },
-    );
+    )
   }
 }

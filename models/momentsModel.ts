@@ -1,12 +1,12 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose"
 
 export interface IMoment extends Document {
-  order: number;
-  title: string;
-  desc?: string;
-  images: string[];
-  createdAt: Date;
-  updatedAt: Date;
+  order: number
+  title: string
+  desc?: string
+  images: string[]
+  createdAt: Date
+  updatedAt: Date
 }
 
 const MomentSchema: Schema = new Schema(
@@ -19,7 +19,7 @@ const MomentSchema: Schema = new Schema(
   {
     timestamps: true,
   },
-);
+)
 
 export const Moment: Model<IMoment> =
-  mongoose.models.Moment || mongoose.model<IMoment>("Moment", MomentSchema);
+  mongoose.models.Moment || mongoose.model<IMoment>("Moment", MomentSchema)

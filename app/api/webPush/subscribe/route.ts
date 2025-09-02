@@ -1,21 +1,21 @@
-import { NextResponse } from "next/server";
-import dbConnect from "@/lib/db";
-import { WebPushSubscription } from "@/models/webPushModels";
+import { NextResponse } from "next/server"
+import dbConnect from "@/lib/db"
+import { WebPushSubscription } from "@/models/webPushModels"
 
 interface PushSubscriptionJSON {
-  endpoint: string;
+  endpoint: string
   keys: {
-    p256dh: string;
-    auth: string;
-  };
-  expirationTime?: number | null;
+    p256dh: string
+    auth: string
+  }
+  expirationTime?: number | null
 }
 
 export async function POST(request: Request) {
   try {
-    await dbConnect();
-    const sub = (await request.json()) as PushSubscriptionJSON;
-    const { endpoint, keys, expirationTime } = sub;
+    await dbConnect()
+    const sub = (await request.json()) as PushSubscriptionJSON
+    const { endpoint, keys, expirationTime } = sub
 
     await WebPushSubscription.findOneAndUpdate(
       { endpoint },
@@ -31,14 +31,14 @@ export async function POST(request: Request) {
         new: true,
         setDefaultsOnInsert: true,
       },
-    );
+    )
 
-    return NextResponse.json({ success: true }, { status: 201 });
+    return NextResponse.json({ success: true }, { status: 201 })
   } catch (error) {
-    console.error("Subscribe error:", error);
+    console.error("Subscribe error:", error)
     return NextResponse.json(
       { error: "Unable to save subscription" },
       { status: 500 },
-    );
+    )
   }
 }

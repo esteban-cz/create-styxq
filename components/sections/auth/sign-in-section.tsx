@@ -1,48 +1,48 @@
-"use client";
+"use client"
 
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Card } from "@/components/ui/card";
+import { useRouter } from "next/navigation"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Input } from "@/components/ui/input"
+import { Card } from "@/components/ui/card"
 import {
   Form,
   FormField,
   FormItem,
   FormControl,
   FormLabel,
-} from "@/components/ui/form";
-import { signInSchema, type SignInData } from "@/validation/signInSchema";
-import useHttp from "@/hooks/useHttp";
-import { motion } from "motion/react";
-import { PasswordInput } from "@/components/ui/password-input";
-import { LoadingButton } from "@/components/ui/button-loading";
-import { Lock, Mail } from "lucide-react";
-import LinkAnimated from "@/components/ui/link-animated";
+} from "@/components/ui/form"
+import { signInSchema, type SignInData } from "@/validation/signInSchema"
+import useHttp from "@/hooks/useHttp"
+import { motion } from "motion/react"
+import { PasswordInput } from "@/components/ui/password-input"
+import { LoadingButton } from "@/components/ui/button-loading"
+import { Lock, Mail } from "lucide-react"
+import LinkAnimated from "@/components/ui/link-animated"
 
 export default function SignInSection() {
-  const { req, loading } = useHttp();
-  const router = useRouter();
+  const { req, loading } = useHttp()
+  const router = useRouter()
 
   const form = useForm<SignInData>({
     resolver: zodResolver(signInSchema),
     defaultValues: { email: "", password: "" },
     mode: "onChange",
-  });
+  })
 
   async function onSubmit(data: SignInData) {
     const res = await req("/api/auth/signIn", data, "POST", {
       successToast: true,
-    });
-    if (!res.ok) return;
-    router.push("/");
-    router.refresh();
+    })
+    if (!res.ok) return
+    router.push("/")
+    router.refresh()
   }
 
   const containerVariants = {
     hidden: { opacity: 0, y: -20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+  }
 
   return (
     <section className="bg-background/10 py-30">
@@ -134,5 +134,5 @@ export default function SignInSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }

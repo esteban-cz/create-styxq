@@ -1,60 +1,60 @@
-"use client";
+"use client"
 
-import { ArrowUp, Twitter, Github, Linkedin } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { motion } from "motion/react";
-import { useEffect, useState } from "react";
-import { toast } from "sonner";
-import { useIsMobile } from "@/hooks/useMobile";
-import Link from "next/link";
-import DynamicIcon from "@/components/ui/dynamic-icon";
-import LinkAnimated from "@/components/ui/link-animated";
+import { ArrowUp, Twitter, Github, Linkedin } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { motion } from "motion/react"
+import { useEffect, useState } from "react"
+import { toast } from "sonner"
+import { useIsMobile } from "@/hooks/useMobile"
+import Link from "next/link"
+import DynamicIcon from "@/components/ui/dynamic-icon"
+import LinkAnimated from "@/components/ui/link-animated"
 
 type ContactInfo = {
-  id: number;
-  icon: string;
-  title: string;
-  detail: string;
-  description: string;
-};
+  id: number
+  icon: string
+  title: string
+  detail: string
+  description: string
+}
 
 export default function Footer() {
   const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
-  const [contactInfo, setContactInfo] = useState<ContactInfo[]>([]);
-  const [loading, setLoading] = useState(true);
-  const isMobile = useIsMobile();
+  const [contactInfo, setContactInfo] = useState<ContactInfo[]>([])
+  const [loading, setLoading] = useState(true)
+  const isMobile = useIsMobile()
 
   const handleContactClick = (info: ContactInfo) => {
     switch (info.title) {
       case "Email":
-        window.location.href = `mailto:${info.detail}`;
-        break;
+        window.location.href = `mailto:${info.detail}`
+        break
       case "Phone":
         if (isMobile) {
-          window.location.href = `tel:${info.detail}`;
+          window.location.href = `tel:${info.detail}`
         } else {
           navigator.clipboard
             .writeText(info.detail)
             .then(() => toast.success("Phone number copied!"))
-            .catch(() => toast.error("Copy failed"));
+            .catch(() => toast.error("Copy failed"))
         }
-        break;
+        break
       case "Location": {
-        const loc = info.detail;
+        const loc = info.detail
         const url = isMobile
           ? `geo:0,0?q=${encodeURIComponent(loc)}`
-          : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`;
-        window.open(url, "_blank");
-        break;
+          : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(loc)}`
+        window.open(url, "_blank")
+        break
       }
       case "Live Chat":
         // implement live chat
-        break;
+        break
     }
-  };
+  }
 
   useEffect(() => {
     const contacts: ContactInfo[] = [
@@ -79,11 +79,11 @@ export default function Footer() {
         detail: "San Francisco, CA",
         description: "Our location",
       },
-    ];
+    ]
 
-    setContactInfo(contacts);
-    setLoading(false);
-  }, []);
+    setContactInfo(contacts)
+    setLoading(false)
+  }, [])
 
   return (
     <footer className="from-background/80 to-background/100 border-t bg-gradient-to-b backdrop-blur">
@@ -186,5 +186,5 @@ export default function Footer() {
         </div>
       </div>
     </footer>
-  );
+  )
 }

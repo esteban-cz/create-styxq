@@ -1,14 +1,14 @@
-import mongoose, { Schema, Document, Model } from "mongoose";
+import mongoose, { Schema, Document, Model } from "mongoose"
 
 export interface IWebPushSubscription extends Document {
-  endpoint: string;
+  endpoint: string
   keys: {
-    p256dh: string;
-    auth: string;
-  };
-  expirationTime?: number | null;
-  createdAt: Date;
-  updatedAt: Date;
+    p256dh: string
+    auth: string
+  }
+  expirationTime?: number | null
+  createdAt: Date
+  updatedAt: Date
 }
 
 const WebPushSubscriptionSchema = new Schema<IWebPushSubscription>(
@@ -23,19 +23,19 @@ const WebPushSubscriptionSchema = new Schema<IWebPushSubscription>(
   {
     timestamps: true,
   },
-);
+)
 
 export const WebPushSubscription: Model<IWebPushSubscription> =
   mongoose.models.WebPushSubscription ||
   mongoose.model<IWebPushSubscription>(
     "WebPushSubscription",
     WebPushSubscriptionSchema,
-  );
+  )
 
 export interface INotificationLog extends Document {
-  subscriptionId: mongoose.Types.ObjectId;
-  payload: string;
-  sentAt: Date;
+  subscriptionId: mongoose.Types.ObjectId
+  payload: string
+  sentAt: Date
 }
 
 const NotificationLogSchema = new Schema<INotificationLog>(
@@ -51,8 +51,8 @@ const NotificationLogSchema = new Schema<INotificationLog>(
   {
     timestamps: false,
   },
-);
+)
 
 export const NotificationLog: Model<INotificationLog> =
   mongoose.models.NotificationLog ||
-  mongoose.model<INotificationLog>("NotificationLog", NotificationLogSchema);
+  mongoose.model<INotificationLog>("NotificationLog", NotificationLogSchema)

@@ -1,10 +1,10 @@
-"use client";
-import { Toaster } from "sonner";
-import { useTheme } from "next-themes";
+"use client"
+import { Toaster } from "sonner"
+import { useTheme } from "next-themes"
 
 export default function ToasterWithTheme() {
-  const { theme, resolvedTheme } = useTheme();
-  const currentTheme = theme === "system" ? resolvedTheme : theme;
+  const { theme, resolvedTheme } = useTheme()
+  const currentTheme = theme === "system" ? resolvedTheme : theme
   return (
     <Toaster
       theme={currentTheme === "dark" ? "dark" : "light"}
@@ -12,5 +12,5 @@ export default function ToasterWithTheme() {
       closeButton
       className="z-[9999]"
     />
-  );
+  )
 }

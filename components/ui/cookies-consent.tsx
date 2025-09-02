@@ -1,16 +1,16 @@
-"use client";
+"use client"
 
-import { CookieIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
+import { CookieIcon } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { useEffect, useState } from "react"
+import { cn } from "@/lib/utils"
 
 interface CookieConsentProps {
-  variant?: "default" | "small";
-  essential?: boolean;
-  demo?: boolean;
-  onAcceptCallback?: () => void;
-  onDeclineCallback?: () => void;
+  variant?: "default" | "small"
+  essential?: boolean
+  demo?: boolean
+  onAcceptCallback?: () => void
+  onDeclineCallback?: () => void
 }
 
 export default function CookieConsent({
@@ -24,47 +24,47 @@ export default function CookieConsent({
     //
   },
 }: CookieConsentProps) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [hide, setHide] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
+  const [hide, setHide] = useState(false)
 
   const acceptEssential = () => {
-    setIsOpen(false);
+    setIsOpen(false)
     document.cookie =
-      "essentialCookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    setTimeout(() => setHide(true), 700);
-    onAcceptCallback();
-  };
+      "essentialCookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+    setTimeout(() => setHide(true), 700)
+    onAcceptCallback()
+  }
 
   const acceptAll = () => {
-    setIsOpen(false);
+    setIsOpen(false)
     document.cookie =
-      "cookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT";
-    setTimeout(() => setHide(true), 700);
-    onAcceptCallback();
-  };
+      "cookieConsent=true; expires=Fri, 31 Dec 9999 23:59:59 GMT"
+    setTimeout(() => setHide(true), 700)
+    onAcceptCallback()
+  }
 
   const decline = () => {
-    setIsOpen(false);
-    setTimeout(() => setHide(true), 700);
-    onDeclineCallback();
-  };
+    setIsOpen(false)
+    setTimeout(() => setHide(true), 700)
+    onDeclineCallback()
+  }
 
   useEffect(() => {
     try {
-      setIsOpen(true);
+      setIsOpen(true)
       if (essential) {
         if (document.cookie.includes("essentialCookieConsent=true") && !demo) {
-          setIsOpen(false);
-          setTimeout(() => setHide(true), 700);
+          setIsOpen(false)
+          setTimeout(() => setHide(true), 700)
         }
       } else {
         if (document.cookie.includes("cookieConsent=true") && !demo) {
-          setIsOpen(false);
-          setTimeout(() => setHide(true), 700);
+          setIsOpen(false)
+          setTimeout(() => setHide(true), 700)
         }
       }
     } catch {}
-  }, [demo, essential]);
+  }, [demo, essential])
 
   if (essential) {
     return (
@@ -96,7 +96,7 @@ export default function CookieConsent({
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return variant === "default" ? (
@@ -175,5 +175,5 @@ export default function CookieConsent({
         </div>
       </div>
     )
-  );
+  )
 }

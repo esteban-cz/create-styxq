@@ -1,30 +1,30 @@
-"use client";
+"use client"
 
-import * as React from "react";
-import { motion, AnimatePresence } from "motion/react";
-import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import * as React from "react"
+import { motion, AnimatePresence } from "motion/react"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button"
 
 export default function ThemeButton() {
-  const { theme, setTheme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false)
 
   React.useEffect(() => {
-    setMounted(true);
-  }, []);
+    setMounted(true)
+  }, [])
 
-  if (!mounted) return null;
+  if (!mounted) return null
 
-  const currentTheme = theme === "system" ? resolvedTheme : theme;
+  const currentTheme = theme === "system" ? resolvedTheme : theme
 
   const toggleTheme = () => {
     if (currentTheme === "dark") {
-      setTheme("light");
+      setTheme("light")
     } else {
-      setTheme("dark");
+      setTheme("dark")
     }
-  };
+  }
 
   return (
     <Button variant="ghost" size="icon" onClick={toggleTheme}>
@@ -52,5 +52,5 @@ export default function ThemeButton() {
         )}
       </AnimatePresence>
     </Button>
-  );
+  )
 }

@@ -1,13 +1,13 @@
-import { FlatCompat } from "@eslint/eslintrc";
-import { defineConfig } from "eslint/config";
-import tseslint from "typescript-eslint";
+import { FlatCompat } from "@eslint/eslintrc"
+import { defineConfig } from "eslint/config"
+import tseslint from "typescript-eslint"
 
-import noRelative from "eslint-plugin-no-relative-import-paths";
-import unusedImports from "eslint-plugin-unused-imports";
+import noRelative from "eslint-plugin-no-relative-import-paths"
+import unusedImports from "eslint-plugin-unused-imports"
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
-});
+})
 
 export default defineConfig([
   {
@@ -83,4 +83,4 @@ export default defineConfig([
       },
     },
   },
-]);
+])
