@@ -8,9 +8,8 @@ import Footer from "@/components/layout/Footer"
 import ToasterWithTheme from "@/components/ui/theme-toaster"
 import RegisterSW from "@/components/PWA/register-sw"
 import CookieConsent from "@/components/ui/cookies-consent"
-import { cookies } from "next/headers"
-import { verifyToken } from "@/lib/auth/verifyToken"
-import { AuthProvider } from "@/components/providers/auth-provider"
+import AuthWrapper from "@/components/auth/auth-wrapper"
+import ConfirmDialogProvider from "@/components/providers/confirm-dialog-provider"
 
 const font = Inter({ subsets: ["latin"] })
 
@@ -32,22 +31,10 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const token = cookieStore.get("auth_token")?.value
-
-  let decodedToken = null
-  if (token) {
-    try {
-      decodedToken = await verifyToken(token)
-    } catch (error) {
-      console.log("Error decoding token:", error)
-    }
-  }
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={font.className}>
-        <AuthProvider decodedToken={decodedToken?.payload}>
+        <AuthWrapper>
           <ThemeProvider
             attribute="class"
             defaultTheme="dark"
@@ -58,12 +45,13 @@ export default async function RootLayout({
               <Navbar />
               <RegisterSW />
               <main className="min-h-screen">{children}</main>
+              <ConfirmDialogProvider />
               <CookieConsent essential />
               <ToasterWithTheme />
               <Footer />
             </ReactLenis>
           </ThemeProvider>
-        </AuthProvider>
+        </AuthWrapper>
       </body>
     </html>
   )

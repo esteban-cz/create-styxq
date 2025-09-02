@@ -8,9 +8,9 @@ import { Menu, X, Rocket } from "lucide-react"
 import { motion, AnimatePresence } from "motion/react"
 import ThemeButton from "@/components/ui/theme/theme-button-animated"
 import InstallPrompt from "@/components/PWA/install-prompt"
-import { useAuth } from "@/components/providers/auth-provider"
 import useHttp from "@/hooks/useHttp"
 import LinkAnimated from "@/components/ui/link-animated"
+import { useAuth } from "@/components/auth/auth-provider"
 
 const menuVariants = {
   hidden: { height: 0, transition: { when: "afterChildren" } },

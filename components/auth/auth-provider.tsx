@@ -20,8 +20,8 @@ interface AuthProviderProps {
 }
 
 export const AuthProvider = ({ children, decodedToken }: AuthProviderProps) => {
-  const [user, setUser] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState<any>(decodedToken ?? null)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     setUser(decodedToken ?? null)
